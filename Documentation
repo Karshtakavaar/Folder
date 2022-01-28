@@ -1,0 +1,78 @@
+local library = loadstring(game:HttpGet("https://pastebin.com/raw/eWKgbdix", true))() --Difines the "library" at the stat so everything works!
+local Window = library:CreateWindow('Example Window') --This will make the window, the thing you can drag on your screen so that you can add things onto it
+Window:Section('Top') -- Adds the words "Top" as the first option
+local Toggle = Window:Toggle('Example Toggle', {flag = "toggle1"})
+local Button = Window:Button("Example Button", function()
+    --Everything inside will be ran when the button is pressed
+   print(Window.flags.toggle1) -- This will print out the status of the toggle (true / false)
+end)
+w:Section('Middle')  --Middle section is placed in the GUI
+local old = workspace.CurrentCamera.FieldOfView --Sets the current Field of view as a variable that can be used later
+local Slider = Window:Slider("FOV", { --Creates a slider for the Field of view
+   min = math.floor(workspace.CurrentCamera.FieldOfView); --You cannot go below the minimum set
+   max = 120; --This is the maximum number you can get
+   flag = 'fov' --Flag // Variable
+}, function(v)
+    -- "v" is the value that changes (Variable, the new number of the slider)
+   workspace.CurrentCamera.FieldOfView = v; --Sets the new field of view
+end)
+local Button2 = Window:Button('Reset FOV', function()
+    --Same as the other button, everything inside is ran on the button press
+   Slider:Set(old) --This will set the current Slider variable to the "old" variable that was given before
+end)
+Window:Section('Bottom') --Final section made  called "Bottom"
+
+local Box = Window:Box('WalkSpeed', { --Box, you can type any number and it will set the walkspeed to that
+   flag = "ws";
+   type = 'number';
+   --[[
+       You can also add 
+       max = 100 (Maximum number)
+       min = 0 (Minimum number you'd like to have)
+   ]]
+}, function(new, old, enter)
+   print(new, old, enter) --new is the new value, old is the value before the chang, enter is uhm idk
+   game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(new) --Sets the walkspeed to the new value you've entered
+end)
+--Both Searchbox and Dropdown do not require a `local x = ` to define the variable
+Window:SearchBox("gamers", { 
+   location = shared;
+   flag = "memes"; --This will be Window.flags.memes 
+   list = {
+       "kiriot";
+       "magikmanz";
+       "gamer vision";
+       "ironbrew";
+       "wally";
+       "firefox";
+       "this is epic";
+   }
+}, function()
+warn(Window.flags.memes) --Prints the value you've selected
+end)
+
+Window:Dropdown("locations", {
+   location = _G; --You'd call this by doing _G.memes 
+   flag = "memes"; --As the location is not Window.flags.memes, it is easily called with _G.memes that is sometimes easier to remember
+   list = {
+       "jewelryin";
+       "jewelryout";
+       'bank';
+       'gas';
+       'prison';
+       'crimbase1';
+       'crimbase2';
+   }
+}, function(new)
+   warn(new)
+   print(_G.memes)
+end)
+
+Window:Bind("Kill Player", {
+   flag = "killbind";
+   kbonly = true;
+   default = Enum.KeyCode.RightAlt; --The default key is "RightAlt" and that can be changed by the user at any time!
+}, function()
+    --This the script below will run every time the key is pressed.
+   game.Players.LocalPlayer.Character:BreakJoints()
+end)
