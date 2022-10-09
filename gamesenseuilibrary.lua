@@ -2367,7 +2367,8 @@ local Passed, Statement = pcall(function()
 			return Content
 		end
 	end
-	-- [[  // Main // ]]
+-[[		
+		
 	local window = library:CreateWindow({})
 	--
 	local rage = window:CreatePage({Icon = "rbxassetid://8547236654"})
@@ -2456,4 +2457,4 @@ local Passed, Statement = pcall(function()
 	effects:CreateToggle({Name = "Bullet impacts", State = false})
 	effects:CreateToggle({Name = "Override Skybox", State = false})
 end)
---
+--]]
